@@ -51,7 +51,7 @@ class Brainfucker:
         whether Brainfucker is running in ASCII or non-ASCII (numerical) mode.
         """
         program = self.clean(program)
-        if not self.isBalanced(program):
+        if not brackets.isBalanced(program):
             raise Exception("Unbalanced brackets")
         location = 0
         v = 0
@@ -99,20 +99,6 @@ class Brainfucker:
                     location = brackets.match(program, location)
             else:
                 raise Exception("Invalid character in program.")
-
-    def isBalanced(self, program):
-        """
-        Return True if brackets in program are balanced and False if not.
-        """
-        matches = 0
-        for char in program:
-            if char == '[':
-                matches += 1
-            elif char == "]":
-                matches -= 1
-                if matches < 0:
-                    return False
-        return matches == 0
 
     def resetEnv(self):
         """

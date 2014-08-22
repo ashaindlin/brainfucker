@@ -15,3 +15,17 @@ def match(string, pos):
             elif string[newPos] == partner[string[pos]]:
                 matched -= 1
         return newPos
+
+def isBalanced(program):
+    """
+    Return True if brackets in program are balanced and False if not.
+    """
+    matches = 0
+    for char in program:
+        if char == '[':
+            matches += 1
+        elif char == "]":
+            matches -= 1
+            if matches < 0:
+                return False
+    return matches == 0

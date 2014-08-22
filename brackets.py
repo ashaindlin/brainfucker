@@ -1,4 +1,10 @@
 def match(string, pos):
+    """
+    Return the position of the matching bracket to the bracket at string[pos],
+    or -1 if pos is an invalid index or string[pos] is not a bracket.
+
+    Works for parentheses, square brackets, and curly braces.
+    """
     if pos not in range(len(string)) or string[pos] not in "([{}])":
         return -1
     else:

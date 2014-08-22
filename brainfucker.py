@@ -1,9 +1,26 @@
+"""
+Interpret Brainfuck code from the comfort of your Python shell.
+"""
 import brackets
 import re
 
 class Brainfucker:
+    """
+    To use Brainfucker, create an instance of the Brainfucker class and pass a
+    string containing your Brainfuck program to the interpret method. It can
+    contain comments; the text is cleaned before being interpreted.
 
-    def __init__(self, cells=10000, useASCII=True, verbose=False):
+    You can also use the clean method to remove non-Brainfuck characters from
+    a program string without running the program.
+    """
+
+    def __init__(self, cells=9999, useASCII=True, verbose=False):
+        """
+        Construct a new Brainfucker instance.
+
+        The cells array always contains at least 9999 cells, to be nice. The
+        pointer is a index into the cell array, tracking program execution.
+        """
         if cells < 9999:
             cells = 9999
         self.cells = [0]*cells
@@ -19,6 +36,20 @@ class Brainfucker:
         return re.sub('[^><+\-.,\[\]]', '', program)
 
     def interpret(self, program):
+        """
+        Interpret a string as a Brainfuck program.
+
+        First, the string is stripped of non-Brainfuck characters and checked
+        for balanced brackets. Unbalanced brackets after cleaning will raise an
+        exception.
+
+        Then, the program is run using the cell array and instruction pointer
+        exposed as object properties. WARNING: Running multiple programs in a
+        row without calling resetEnv can result in unpredictable behavior.
+
+        The prompt for user input is 'bf> '. When giving input, be mindful of
+        whether Brainfucker is running in ASCII or non-ASCII (numerical) mode.
+        """
         program = self.clean(program)
         if not self.isBalanced(program):
             raise Exception("Unbalanced brackets")
